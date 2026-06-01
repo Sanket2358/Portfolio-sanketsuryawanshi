@@ -3,118 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanket Suryawanshi - Portfolio</title>
-    <!-- Tailwind CSS for styling -->
+    <title>Sanket Suryawanshi | AIML Engineer & Data Analyst Portfolio</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',    // slate-900
+                            card: '#1e293b',    // slate-800
+                            primary: '#38bdf8', // sky-400
+                            accent: '#10b981',  // emerald-500
+                            indigo: '#818cf8',  // indigo-400
+                        }
+                    },
+                    boxShadow: {
+                        'neon-sky': '0 0 25px rgba(56, 189, 248, 0.25)',
+                        'neon-emerald': '0 0 25px rgba(16, 185, 129, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-premium {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Glowing Orbs Background */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.25;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1) rotate(0deg); }
+            50% { transform: translateY(-40px) scale(1.15) rotate(180deg); }
+            100% { transform: translateY(-10px) scale(0.9) rotate(360deg); }
+        }
+
+        /* Gradient Text */
+        .text-gradient-sky {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .text-gradient-emerald {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* Reveal Animation on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SQL Terminal customized formatting */
+        .terminal-scroll::-webkit-scrollbar { width: 5px; }
+        .terminal-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 2px; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans selection:bg-blue-200 antialiased">
+<body class="antialiased selection:bg-brand-primary selection:text-slate-900">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="font-bold text-xl tracking-tighter text-blue-600">SS.</div>
-            <div class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#home" class="nav-link text-blue-600 hover:text-blue-600 transition-colors">Home</a>
-                <a href="#about" class="nav-link text-slate-600 hover:text-blue-600 transition-colors">About</a>
-                <a href="#experience" class="nav-link text-slate-600 hover:text-blue-600 transition-colors">Experience</a>
-                <a href="#projects" class="nav-link text-slate-600 hover:text-blue-600 transition-colors">Projects</a>
-                <a href="#education" class="nav-link text-slate-600 hover:text-blue-600 transition-colors">Education</a>
-            </div>
-            <a href="mailto:suryawanshisanket769@gmail.com" class="hidden md:inline-flex px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-full hover:bg-blue-700 transition-colors">
-                Let's Talk
-            </a>
-        </div>
-    </nav>
+    <!-- Toast Container for Custom Alerts -->
+    <div id="toast-container" class="fixed top-24 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-6xl mx-auto flex flex-col justify-center min-h-[90vh] relative">
-        <div class="max-w-3xl">
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-6">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <span>Open to Opportunities</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-slate-900">
-                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Sanket Suryawanshi</span>
-            </h1>
-            <h2 class="text-2xl md:text-3xl font-medium text-slate-600 mb-8 leading-relaxed">
-                AI/ML Engineer & Business Development Associate bridging the gap between <span class="text-slate-900 font-semibold">data-driven technology</span> and <span class="text-slate-900 font-semibold">business growth</span>.
-            </h2>
-            
-            <div class="flex flex-wrap items-center gap-4 mb-12">
-                <a href="mailto:suryawanshisanket769@gmail.com" class="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors bg-white px-4 py-2 rounded-lg border shadow-sm">
-                    <i data-lucide="mail" class="w-5 h-5"></i> <span>Email Me</span>
+    <!-- Background Dynamic Orbs -->
+    <div class="glow-orb bg-brand-primary w-96 h-96 top-[-5%] left-[-5%]"></div>
+    <div class="glow-orb bg-brand-accent w-[450px] h-[450px] top-[35%] right-[-10%] opacity-15" style="animation-delay: -3s;"></div>
+    <div class="glow-orb bg-brand-indigo w-96 h-96 bottom-[15%] left-[10%] opacity-20" style="animation-delay: -6s;"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-brand-dark/40 backdrop-blur-md border-b border-slate-800/50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="font-mono text-lg sm:text-xl font-bold text-white tracking-tighter">
+                    <span class="text-brand-primary">&lt;Sanket</span> Suryawanshi<span class="text-brand-accent">.ai /&gt;</span>
                 </a>
-                <a href="https://github.com/Sanket2358" target="_blank" rel="noreferrer" class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 transition-colors bg-white px-4 py-2 rounded-lg border shadow-sm">
-                    <i data-lucide="github" class="w-5 h-5"></i> <span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/Sanket Suryawanshi" target="_blank" rel="noreferrer" class="flex items-center space-x-2 text-slate-600 hover:text-blue-700 transition-colors bg-white px-4 py-2 rounded-lg border shadow-sm">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i> <span>LinkedIn</span>
-                </a>
+                
+                <!-- Desktop Navigation Menu -->
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#about" class="text-sm font-medium text-slate-300 hover:text-brand-primary transition-colors">About</a>
+                    <a href="#skills" class="text-sm font-medium text-slate-300 hover:text-brand-primary transition-colors">Skills</a>
+                    <a href="#experience" class="text-sm font-medium text-slate-300 hover:text-brand-primary transition-colors">Experience</a>
+                    <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-brand-primary transition-colors">Projects</a>
+                    <a href="#education" class="text-sm font-medium text-slate-300 hover:text-brand-primary transition-colors">Education</a>
+                    <a href="#terminal-playground" class="text-xs font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-brand-accent animate-pulse">SQL Playground</a>
+                    <a href="#contact" class="px-5 py-2.5 rounded-lg bg-brand-primary/10 border border-brand-primary/50 text-brand-primary hover:bg-brand-primary hover:text-slate-900 text-sm font-semibold tracking-wide transition-all duration-300 shadow-neon-sky">
+                        Contact Me
+                    </a>
+                </div>
+
+                <!-- Mobile Navigation Menu Toggle Button -->
+                <button class="md:hidden text-slate-300 hover:text-white p-2" id="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+                </button>
             </div>
         </div>
         
-        <a href="#about" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-400 hover:text-blue-600 transition-colors animate-bounce">
-            <i data-lucide="chevron-down" class="w-8 h-8"></i>
-        </a>
-    </section>
+        <!-- Mobile Navigation Menu Overlay -->
+        <div class="md:hidden hidden bg-brand-dark/95 backdrop-blur-lg border-b border-slate-800 absolute w-full left-0 transition-all" id="mobile-menu">
+            <div class="px-4 py-6 space-y-4 shadow-2xl">
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 rounded-md">About</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 rounded-md">Skills</a>
+                <a href="#experience" class="block px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 rounded-md">Experience</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 rounded-md">Projects</a>
+                <a href="#education" class="block px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 rounded-md">Education</a>
+                <a href="#terminal-playground" class="block px-3 py-2 text-base font-mono text-brand-accent hover:bg-slate-800 rounded-md">Interactive SQL Console</a>
+                <a href="#contact" class="block px-3 py-2.5 text-center text-base font-bold bg-brand-primary text-slate-900 rounded-md shadow-neon-sky">Contact Me</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white border-t border-slate-100">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-start">
-                <div>
-                    <h3 class="text-3xl font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="cpu" class="text-blue-600 w-8 h-8"></i> About Me
-                    </h3>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
-                        I am a results-driven professional with a unique blend of technical expertise in Artificial Intelligence and Machine Learning, coupled with strong business development acumen.
+    <!-- Hero Showcase Section -->
+    <section id="hero" class="relative pt-32 pb-16 lg:pt-44 lg:pb-28 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Details Col -->
+                <div class="lg:col-span-7 text-left">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full glass border border-brand-primary/20 text-brand-primary text-xs sm:text-sm font-mono mb-6 reveal">
+                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping mr-2"></span>
+                        AIML Engineer &amp; Analytical Data Analyst
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 text-white leading-tight reveal" style="transition-delay: 100ms;">
+                        Sanket Suryawanshi<br>
+                        <span class="text-gradient-sky">Data Architectures</span> &amp;<br class="hidden sm:inline">
+                        <span class="text-gradient-emerald">Intelligent Workflows</span>
+                    </h1>
+                    
+                    <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mb-8 leading-relaxed reveal" style="transition-delay: 200ms;">
+                        Aspiring <strong class="text-white">Data Analyst</strong> and <strong class="text-white">AI/ML Engineer</strong> with hands-on experience structuring, cleaning, and visualizing datasets. Graduated with a B.E. in Artificial Intelligence &amp; Machine Learning, specializing in converting complex technical parameters into structured commercial insights using SQL, Power BI, Python, and statistical modeling.
                     </p>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
-                        Currently based in Pune, Maharashtra, I excel in leveraging data to drive strategic decisions. Whether it's building Python-based IoT systems, analyzing sales data in Excel, or leading client outreach strategies, I focus on delivering tangible value and achieving growth targets.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mt-8">
-                        <div class="flex items-center gap-2 text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-md">
-                            <i data-lucide="map-pin" class="text-slate-400 w-4 h-4"></i> Pune, India
-                        </div>
-                        
-                        <div class="flex items-center gap-2 text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-md">
-                            <i data-lucide="award" class="text-slate-400 w-4 h-4"></i> English, Hindi, Marathi
-                        </div>
+                    
+                    <div class="flex flex-wrap gap-4 reveal" style="transition-delay: 300ms;">
+                        <a href="#projects" class="px-6 py-3.5 rounded-lg bg-brand-primary text-slate-950 font-bold hover:bg-sky-300 transition-all shadow-neon-sky hover:scale-105 transform">
+                            <i class="fas fa-folder-open mr-2"></i> Explore Projects
+                        </a>
+                        <a href="#terminal-playground" class="px-6 py-3.5 rounded-lg bg-slate-800/80 border border-slate-700 text-brand-accent font-mono text-sm hover:border-brand-accent/50 transition-all flex items-center hover:shadow-neon-emerald">
+                            <i class="fas fa-terminal mr-2"></i> Launch SQL Sandbox
+                        </a>
+                        <a href="mailto:suryawanshisanket769@gmail.com" class="px-5 py-3.5 rounded-lg glass border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-all">
+                            <i class="fas fa-paper-plane mr-2"></i> Quick Mail
+                        </a>
+                    </div>
+
+                    <!-- Social Handles & Quick Meta Info -->
+                    <div class="mt-10 flex flex-wrap items-center gap-6 text-sm text-slate-500 font-mono reveal" style="transition-delay: 400ms;">
+                        <span class="flex items-center"><i class="fas fa-map-marker-alt text-brand-primary mr-2"></i> Pune, India</span>
+                        <a href="https://github.com/Sanket2358" target="_blank" class="hover:text-white transition-colors flex items-center"><i class="fab fa-github text-xl mr-2"></i> GitHub</a>
+                        <a href="https://linkedin.com/in/sanketsuryawanshi7" target="_blank" class="hover:text-white transition-colors flex items-center"><i class="fab fa-linkedin text-xl mr-2"></i> LinkedIn</a>
                     </div>
                 </div>
-                
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                    <h4 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="code" class="text-indigo-500 w-6 h-6"></i> Core Competencies
-                    </h4>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <h5 class="font-semibold text-slate-900 mb-3">Technical Skills</h5>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">Python</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">Flask</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">DSA</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">OOPS</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">IoT</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">Machine Learning</span>
-                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-sm font-medium">AI</span>
+
+                <!-- Right Visual Terminal Col -->
+                <div class="lg:col-span-5 reveal" style="transition-delay: 300ms;">
+                    <div class="glass-premium p-6 rounded-2xl relative shadow-2xl border border-slate-800 group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-primary to-brand-accent rounded-2xl blur opacity-15 group-hover:opacity-25 transition-opacity duration-500"></div>
+                        <div class="relative">
+                            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                                </div>
+                                <span class="text-xs font-mono text-slate-500">engine_diagnostics.py</span>
                             </div>
-                        </div>
-                        
-                        <div>
-                            <h5 class="font-semibold text-slate-900 mb-3">Business & Data</h5>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Power BI</span>
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Advanced Excel</span>
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Data Analysis</span>
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Lead Gen</span>
-                                <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Market Research</span>
+                            <div class="font-mono text-xs sm:text-sm text-slate-300 space-y-2.5 overflow-x-auto">
+                                <p><span class="text-sky-400">import</span> pandas <span class="text-sky-400">as</span> pd</p>
+                                <p><span class="text-sky-400">import</span> telemetry_core <span class="text-sky-400">as</span> tc</p>
+                                <p class="text-slate-500"># Engineering sanket_data profile</p>
+                                <p>sanket = tc.Engineer(role=<span class="text-emerald-400">"AIML &amp; Data Analyst"</span>)</p>
+                                <p>sanket.add_skills([<span class="text-emerald-400">"SQL"</span>, <span class="text-emerald-400">"Power BI"</span>, <span class="text-emerald-400">"Python"</span>, <span class="text-emerald-400">"IoT"</span>])</p>
+                                <br>
+                                <p><span class="text-yellow-400">print</span>(sanket.get_summary())</p>
+                                <div class="p-3 bg-slate-900/80 rounded border border-slate-800 text-brand-primary mt-2">
+                                    "Detail-oriented aspiring Data Analyst. Skilled in data cleaning, SQL extraction, IoT telemetry & dashboard design."
+                                </div>
+                                <p class="mt-4 text-slate-500">&gt;&gt;&gt; compilation: successful [200 OK]</p>
                             </div>
                         </div>
                     </div>
@@ -123,39 +236,197 @@
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-slate-50">
-        <div class="max-w-4xl mx-auto px-6">
-            <h3 class="text-3xl font-bold mb-12 flex items-center gap-2 justify-center">
-                <i data-lucide="briefcase" class="text-blue-600 w-8 h-8"></i> Professional Experience
-            </h3>
-            
-            <div class="relative border-l-2 border-blue-200 ml-4 md:ml-0 md:pl-0">
-                <div class="mb-10 relative md:pl-8 pl-6">
-                    <div class="absolute w-4 h-4 bg-blue-600 rounded-full -left-[9px] top-1 border-4 border-slate-50"></div>
-                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-900">Business Development Associate (Intern)</h4>
-                                <p class="text-blue-600 font-medium text-lg">NXT SYNC PVT. LTD.</p>
+    <!-- Interactive SQL Playground Section (Data Analyst Exclusive Showpiece) -->
+    <section id="terminal-playground" class="py-20 relative bg-slate-950/40 border-t border-slate-800/40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 reveal">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-brand-accent uppercase mb-2">&lt; Interactive Analytics Sandbox /&gt;</h2>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white">Dynamic SQL Console</h3>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm mt-3">
+                    As a data-focused engineer, I built this playground to allow you to interactively query my database. Click the queries below to instantly load and run database commands against my resume facts.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch reveal">
+                <!-- Select Query Console Options -->
+                <div class="lg:col-span-4 flex flex-col justify-between gap-4">
+                    <div class="glass p-5 rounded-xl border border-slate-800 flex flex-col gap-3">
+                        <span class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-bold"><i class="fas fa-list-ul text-brand-primary mr-2"></i> Select Preloaded Queries:</span>
+                        
+                        <button onclick="runSampleQuery('tech_stack')" class="w-full text-left font-mono text-xs p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-primary text-slate-300 hover:text-white transition-all flex items-center justify-between group">
+                            <span>SELECT * FROM tech_stack;</span>
+                            <i class="fas fa-play text-brand-primary opacity-40 group-hover:opacity-100 transition-opacity"></i>
+                        </button>
+                        
+                        <button onclick="runSampleQuery('certifications')" class="w-full text-left font-mono text-xs p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-primary text-slate-300 hover:text-white transition-all flex items-center justify-between group">
+                            <span>SELECT * FROM certs;</span>
+                            <i class="fas fa-play text-brand-primary opacity-40 group-hover:opacity-100 transition-opacity"></i>
+                        </button>
+
+                        <button onclick="runSampleQuery('education')" class="w-full text-left font-mono text-xs p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-primary text-slate-300 hover:text-white transition-all flex items-center justify-between group">
+                            <span>SELECT * FROM academia;</span>
+                            <i class="fas fa-play text-brand-primary opacity-40 group-hover:opacity-100 transition-opacity"></i>
+                        </button>
+
+                        <button onclick="runSampleQuery('contact_info')" class="w-full text-left font-mono text-xs p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-primary text-slate-300 hover:text-white transition-all flex items-center justify-between group">
+                            <span>SELECT * FROM contact;</span>
+                            <i class="fas fa-play text-brand-primary opacity-40 group-hover:opacity-100 transition-opacity"></i>
+                        </button>
+                    </div>
+
+                    <div class="glass p-5 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-2">
+                        <p class="font-bold text-slate-300"><i class="fas fa-info-circle text-brand-accent mr-1.5"></i> Custom Terminal Logic</p>
+                        <p>This interactive database queries structure represents nested datasets directly from Sanket's resume structure utilizing customized local JSON schema configurations.</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Terminal Screen -->
+                <div class="lg:col-span-8 flex flex-col">
+                    <div class="glass-premium rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full min-h-[380px]">
+                        <!-- Terminal Header -->
+                        <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex justify-between items-center text-xs">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-terminal text-brand-accent mr-1"></i>
+                                <span class="font-mono text-slate-400">sanket_sql_sandbox_v1.0.db</span>
                             </div>
-                            <div class="mt-2 md:mt-0 text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full text-sm inline-block w-fit">
-                                Aug 2025 - Sep 2025 • Hyderabad, India
+                            <span class="px-2 py-0.5 bg-brand-primary/10 rounded text-brand-primary font-mono font-semibold">SQLite Engine</span>
+                        </div>
+                        
+                        <!-- Console Output Screen -->
+                        <div id="terminal-screen" class="p-5 font-mono text-xs sm:text-sm text-emerald-400 bg-slate-950/80 flex-grow overflow-y-auto terminal-scroll flex flex-col justify-between max-h-[350px]">
+                            <div id="terminal-content">
+                                <p class="text-slate-500">// Welcome to Sanket's Interactive Portfolio Database Sandbox</p>
+                                <p class="text-slate-500">// Click a query on the left to display tabular, organized database fields...</p>
+                                <p class="mt-2 text-slate-300">&gt; <span class="text-brand-primary">SELECT</span> summary <span class="text-brand-primary">FROM</span> candidate;</p>
+                                <p class="mt-1 text-slate-400">"Analytical engineer skilled in data visualization, structuring real-time IoT communications, and delivering robust datasets."</p>
                             </div>
                         </div>
-                        <ul class="space-y-3 text-slate-600 mt-6">
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Conducted comprehensive market research and analyzed customer data to identify potential business opportunities.
-                            </li>
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Assisted in executing lead generation campaigns and client outreach strategies.
-                            </li>
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Leveraged Excel for organizing, cleaning, and thoroughly analyzing complex sales datasets.
-                            </li>
+
+                        <!-- Manual Input Box -->
+                        <div class="bg-slate-900 border-t border-slate-800 px-4 py-3 flex gap-2">
+                            <span class="font-mono text-xs text-slate-400 flex items-center">SQL&gt;</span>
+                            <input id="query-input" type="text" placeholder="Type select * from tech_stack or certs..." class="w-full bg-transparent border-none text-slate-200 focus:ring-0 focus:outline-none font-mono text-xs sm:text-sm">
+                            <button onclick="executeManualQuery()" class="px-4 py-1.5 bg-brand-primary text-slate-950 font-bold font-mono rounded text-xs hover:bg-sky-300 transition-colors">RUN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 bg-brand-dark/50 border-y border-slate-800/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Visual Stats Column -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4 reveal">
+                    <div class="glass p-6 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-4xl font-extrabold text-brand-primary font-mono mb-2">90%</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block font-bold font-mono">HSC Percentage</span>
+                    </div>
+                    <div class="glass p-6 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-4xl font-extrabold text-brand-accent font-mono mb-2">7.05</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block font-bold font-mono">CGPA Engineering</span>
+                    </div>
+                    <div class="glass p-6 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-4xl font-extrabold text-brand-indigo font-mono mb-2">2025</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block font-bold font-mono">Graduation Year</span>
+                    </div>
+                    <div class="glass p-6 rounded-xl border border-slate-800 text-center">
+                        <span class="block text-4xl font-extrabold text-yellow-500 font-mono mb-2">100%</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block font-bold font-mono">Dedicated Drive</span>
+                    </div>
+                </div>
+
+                <!-- Right Narrative Column -->
+                <div class="lg:col-span-7 reveal" style="transition-delay: 150ms;">
+                    <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; About Me /&gt;</h2>
+                    <h3 class="text-3xl font-bold text-white mb-6">Fusing AIML Engineering Principles with Modern Business Operations</h3>
+                    
+                    <div class="space-y-4 text-slate-400 text-base sm:text-lg leading-relaxed">
+                        <p>
+                            I hold a Bachelor of Engineering in <strong class="text-white">Artificial Intelligence &amp; Machine Learning</strong> from Savitribai Phule Pune University, enabling me to approach dataset configurations and business development questions with structured analytical workflows.
+                        </p>
+                        <p>
+                            My expertise covers data cleansing, complex SQL relational design, and dynamic Power BI reporting structures. From identifying commercial optimization funnels during my intern tenure to developing custom real-time backend API endpoints using Flask and Python, I aim to create highly refined, logical data architectures.
+                        </p>
+                        <p>
+                            I thrive on deciphering unstructured trends, visualizing clean telemetry, and designing smart automation features that alleviate manual operational delays.
+                        </p>
+                    </div>
+
+                    <!-- Interest Badges -->
+                    <div class="mt-8">
+                        <span class="text-xs font-mono font-semibold text-slate-300 block mb-3 uppercase tracking-wider">Primary Technical Interests</span>
+                        <div class="flex flex-wrap gap-2.5">
+                            <span class="px-3 py-1 bg-slate-800/80 rounded-full text-xs text-slate-300 border border-slate-700 hover:border-brand-primary transition-all"><i class="fas fa-chart-line mr-1 text-brand-primary"></i> Dashboards &amp; Insights</span>
+                            <span class="px-3 py-1 bg-slate-800/80 rounded-full text-xs text-slate-300 border border-slate-700 hover:border-brand-primary transition-all"><i class="fas fa-brain mr-1 text-brand-primary"></i> Machine Learning / AI</span>
+                            <span class="px-3 py-1 bg-slate-800/80 rounded-full text-xs text-slate-300 border border-slate-700 hover:border-brand-primary transition-all"><i class="fas fa-chart-pie mr-1 text-brand-primary"></i> Data Visualization</span>
+                            <span class="px-3 py-1 bg-slate-800/80 rounded-full text-xs text-slate-300 border border-slate-700 hover:border-brand-primary transition-all"><i class="fas fa-lightbulb mr-1 text-brand-primary"></i> Complex Problem Solving</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Arsenal & Capabilities Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; Technical Arsenal /&gt;</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">Skills &amp; Capabilities</h3>
+                <p class="text-slate-400 text-sm mt-3 max-w-xl mx-auto">Structured overview of programming parameters, data engineering frameworks, analytical software, and language proficiencies.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skill Group 1: Data Analytics & Databases -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-all duration-300 reveal border-t-4 border-t-brand-primary flex flex-col h-full justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-brand-primary/10 rounded-lg flex items-center justify-center text-brand-primary text-2xl mb-6 shadow-neon-sky">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-3">Data Analytics &amp; Viz</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Advanced data processing, statistical validation, automated analytics pipelines, and reporting frameworks.</p>
+                        <ul class="space-y-3.5 text-slate-300 text-sm font-mono">
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-primary mr-3"></i> SQL (Structured Querying)</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-primary mr-3"></i> Microsoft Excel (Advanced Pivot)</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-primary mr-3"></i> Power BI (Visual Intelligence)</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-primary mr-3"></i> Dashboards &amp; Insights</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Skill Group 2: AI / ML & Programming Languages -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-all duration-300 reveal border-t-4 border-t-brand-indigo flex flex-col h-full justify-between" style="transition-delay: 100ms;">
+                    <div>
+                        <div class="w-12 h-12 bg-brand-indigo/10 rounded-lg flex items-center justify-center text-brand-indigo text-2xl mb-6">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-3">AI, ML &amp; Core Languages</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Object-oriented architectures, algorithmic optimization, real-time communications, and smart logic engines.</p>
+                        <ul class="space-y-3.5 text-slate-300 text-sm font-mono">
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-indigo mr-3"></i> Python Programming</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-indigo mr-3"></i> Data Structures &amp; Algorithms</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-indigo mr-3"></i> Object-Oriented Prog (OOPs)</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-indigo mr-3"></i> Machine Learning Logic</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Skill Group 3: Core Operations & Soft Skills -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-all duration-300 reveal border-t-4 border-t-brand-accent flex flex-col h-full justify-between" style="transition-delay: 200ms;">
+                    <div>
+                        <div class="w-12 h-12 bg-brand-accent/10 rounded-lg flex items-center justify-center text-brand-accent text-2xl mb-6 shadow-neon-emerald">
+                            <i class="fas fa-users-gear"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-3">Operations &amp; Collaboration</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Translating business operational goals, coordinating project metrics, and communicating with cross-functional stakeholders.</p>
+                        <ul class="space-y-3.5 text-slate-300 text-sm font-mono">
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-accent mr-3"></i> Project &amp; Time Management</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-accent mr-3"></i> Team Work &amp; Good Communication</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-accent mr-3"></i> Quick Learner Adaptability</li>
+                            <li class="flex items-center"><i class="fas fa-circle-check text-brand-accent mr-3"></i> Fluent English, Hindi, Marathi</li>
                         </ul>
                     </div>
                 </div>
@@ -163,164 +434,538 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-white border-t border-slate-100">
-        <div class="max-w-6xl mx-auto px-6">
-            <h3 class="text-3xl font-bold mb-12 flex items-center gap-2 justify-center">
-                <i data-lucide="database" class="text-blue-600 w-8 h-8"></i> Featured Projects
-            </h3>
-            
-            <div class="grid md:grid-cols-1 gap-8 max-w-4xl mx-auto">
-                <div class="bg-slate-50 rounded-2xl p-1 border border-slate-200 overflow-hidden group">
-                    <div class="bg-white rounded-xl p-8 h-full transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 border border-transparent group-hover:border-blue-100 shadow-sm">
-                        <div class="flex justify-between items-start mb-6">
+    <!-- Experience Timeline Section -->
+    <section id="experience" class="py-24 bg-brand-dark/40 border-y border-slate-800/40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; Professional Experience /&gt;</h2>
+                <h3 class="text-3xl font-bold text-white">Work History</h3>
+            </div>
+
+            <!-- Timeline Frame -->
+            <div class="relative pl-6 sm:pl-8 border-l-2 border-slate-800 space-y-12">
+                
+                <!-- Role Card 1 (Latest Intern Position) -->
+                <div class="relative reveal group">
+                    <!-- Marker Bubble -->
+                    <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full border-2 border-brand-primary bg-slate-900 flex items-center justify-center text-[10px] text-brand-primary group-hover:bg-brand-primary group-hover:text-slate-950 transition-colors shadow-neon-sky">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    
+                    <div class="glass p-6 sm:p-8 rounded-xl border border-slate-800 hover:border-brand-primary/40 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2">
                             <div>
-                                <h4 class="text-2xl font-bold text-slate-900 mb-2">Smart Home Automation System</h4>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-md">Python</span>
-                                    <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-md">Flask</span>
-                                    <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-md">ESP8266</span>
-                                    <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-md">Firebase</span>
-                                    <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded-md">IoT</span>
-                                </div>
+                                <h4 class="text-xl sm:text-2xl font-bold text-white group-hover:text-brand-primary transition-colors">Business Development Associate (Intern)</h4>
+                                <p class="text-brand-accent font-mono text-xs sm:text-sm mt-1">NXT SYNC PVT. LTD.</p>
                             </div>
-                            <a href="#" class="text-blue-600 bg-blue-50 p-2 rounded-full hover:bg-blue-100 transition-colors">
-                                <i data-lucide="github" class="w-6 h-6"></i>
-                            </a>
+                            <div class="text-left sm:text-right">
+                                <span class="inline-block px-3 py-1 bg-slate-800/80 rounded border border-slate-700 text-xs font-mono text-slate-300"><i class="far fa-calendar-alt mr-1.5"></i> AUG 2025 - SEP 2025</span>
+                                <p class="text-slate-500 font-mono text-xs mt-1"><i class="fas fa-map-marker-alt mr-1"></i> Hyderabad, India</p>
+                            </div>
                         </div>
                         
-                        <p class="text-slate-600 mb-6 leading-relaxed">
-                            A comprehensive IoT-based smart home automation system designed to remotely control and seamlessly monitor electrical devices over the internet.
+                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                            Acted as a crucial operational node to align sales development goals with structured customer datasets, maximizing process pipeline efficiencies through methodical data evaluations.
                         </p>
                         
-                        <ul class="space-y-3 text-slate-600 mb-6">
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Built a robust Flask-based backend to effectively handle device control logic and manage user interactions.
-                            </li>
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Integrated ESP8266 (NodeMCU) microcontrollers with Firebase Realtime Database for real-time data communication.
-                            </li>
-                            <li class="flex items-start">
-                                <span class="mr-2 mt-1.5 text-blue-500 text-xs">●</span>
-                                Programmed and implemented intelligent automation workflows leveraging Python.
-                            </li>
+                        <ul class="text-slate-300 text-xs sm:text-sm space-y-2.5 list-none pl-1">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-primary/70 mt-1 mr-3 shrink-0"></i> <span>Conducted structured market research campaigns and scrutinized vital customer profiles to highlight untapped market segments.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-primary/70 mt-1 mr-3 shrink-0"></i> <span>Assisted in lead generation mechanics and structured multi-channel client outreach configurations.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-primary/70 mt-1 mr-3 shrink-0"></i> <span>Formulated structured database metrics in Microsoft Excel to track, order, and categorize sales leads.</span></li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-brand-primary/70 mt-1 mr-3 shrink-0"></i> <span>Collaborated directly with corporate leadership, delivering performance reports and commercial insights.</span></li>
                         </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Portfolio Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; Projects /&gt;</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">Technical Portfolios</h3>
+                <p class="text-slate-400 text-sm mt-3 max-w-xl mx-auto">Demonstrated applications across IoT, full-stack backends, database coordination, and predictive model systems.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Project Card 1: IoT Smart Home Automation -->
+                <div class="glass rounded-2xl overflow-hidden group border border-slate-800 hover:border-brand-primary/30 transition-all duration-300 reveal flex flex-col h-full justify-between">
+                    <div>
+                        <!-- Project Top Banner Mockup -->
+                        <div class="bg-slate-900/80 px-6 py-5 border-b border-slate-800 flex justify-between items-center">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-primary"></span>
+                                <span class="text-xs font-mono font-bold tracking-wider text-slate-300 uppercase">IoT / Hardware &amp; Flask Backend</span>
+                            </div>
+                            <span class="text-[10px] font-mono px-2 py-0.5 bg-brand-primary/10 rounded text-brand-primary font-bold">Featured System</span>
+                        </div>
+                        
+                        <!-- Details Area -->
+                        <div class="p-6 sm:p-8">
+                            <h4 class="text-2xl font-extrabold text-white mb-4 group-hover:text-brand-primary transition-colors">Smart Home Automation System</h4>
+                            
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                                Developed an IoT-based smart home ecosystem capable of remotely regulating and monitoring multiple physical electrical modules. Integrated microcontrollers with cloud state databases to synchronize device variables seamlessly.
+                            </p>
+
+                            <!-- Problem, Solution, Impact Layout -->
+                            <div class="space-y-4 mb-6">
+                                <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+                                    <span class="text-brand-primary font-mono text-xs font-semibold uppercase tracking-wider block mb-1">Architecture Elements</span>
+                                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">Developed a robust Flask web framework backend containing device configuration logic and intuitive client dashboards.</p>
+                                </div>
+                                <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+                                    <span class="text-brand-accent font-mono text-xs font-semibold uppercase tracking-wider block mb-1">Real-time Telemetry Sync</span>
+                                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">Integrated ESP8266 (NodeMCU) with Firebase Realtime Database. Coded automation algorithms inside Python to eliminate communication latency bottlenecks.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Badges & CTA Footer -->
+                    <div class="px-6 sm:px-8 py-5 border-t border-slate-800/80 bg-slate-900/30 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">Python</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">Flask</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">ESP8266</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">Firebase</span>
+                        </div>
+                        <a href="https://github.com/Sanket2358" target="_blank" class="text-xs font-mono font-bold text-brand-primary hover:text-white flex items-center transition-colors">
+                            SOURCE CODE <i class="fas fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: Interactive Data Analytics Workspace -->
+                <div class="glass rounded-2xl overflow-hidden group border border-slate-800 hover:border-brand-accent/30 transition-all duration-300 reveal flex flex-col h-full justify-between" style="transition-delay: 150ms;">
+                    <div>
+                        <!-- Project Top Banner Mockup -->
+                        <div class="bg-slate-900/80 px-6 py-5 border-b border-slate-800 flex justify-between items-center">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-accent"></span>
+                                <span class="text-xs font-mono font-bold tracking-wider text-slate-300 uppercase">Data Analytics &amp; Visuals</span>
+                            </div>
+                            <span class="text-[10px] font-mono px-2 py-0.5 bg-brand-accent/10 rounded text-brand-accent font-bold">Analysis Profile</span>
+                        </div>
+                        
+                        <!-- Details Area -->
+                        <div class="p-6 sm:p-8">
+                            <h4 class="text-2xl font-extrabold text-white mb-4 group-hover:text-brand-accent transition-colors">Business Telemetry &amp; Power BI Dashboard</h4>
+                            
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                                Formulated structured relational data modeling designs converting raw, unorganized CSV databases into systematic tabular dashboards. Tracked KPIs to help pinpoint commercial bottlenecks.
+                            </p>
+
+                            <!-- Problem, Solution, Impact Layout -->
+                            <div class="space-y-4 mb-6">
+                                <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+                                    <span class="text-brand-primary font-mono text-xs font-semibold uppercase tracking-wider block mb-1">Process Analytics</span>
+                                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">Structured dataset cleanses using advanced Excel formatting and SQL queries to structure demographic targets.</p>
+                                </div>
+                                <div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+                                    <span class="text-brand-accent font-mono text-xs font-semibold uppercase tracking-wider block mb-1">Information Insights</span>
+                                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">Configured Power BI cross-filters to showcase key telemetry dynamics, tracking commercial metrics and operational bottlenecks.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Badges & CTA Footer -->
+                    <div class="px-6 sm:px-8 py-5 border-t border-slate-800/80 bg-slate-900/30 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">Power BI</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">SQL Server</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">MS Excel</span>
+                            <span class="text-[10px] font-mono px-2 py-1 bg-slate-800 rounded border border-slate-700 text-slate-400">Data Cleansing</span>
+                        </div>
+                        <a href="https://github.com/Sanket2358" target="_blank" class="text-xs font-mono font-bold text-brand-accent hover:text-white flex items-center transition-colors">
+                            SEE IMPLEMENTATION <i class="fas fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="py-20 bg-slate-900 text-white">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-3xl font-bold mb-10 flex items-center gap-2">
-                        <i data-lucide="graduation-cap" class="text-blue-400 w-8 h-8"></i> Education
-                    </h3>
-                    
-                    <div class="space-y-8">
-                        <div class="relative pl-6 border-l border-slate-700">
-                            <div class="absolute w-3 h-3 bg-blue-500 rounded-full -left-[6.5px] top-2"></div>
-                            <h4 class="text-xl font-bold text-white">Bachelor of Engineering (AI & ML)</h4>
-                            <p class="text-blue-300 font-medium mb-1">PES Modern College of Engineering, Pune</p>
-                            <p class="text-slate-400 text-sm mb-2">Savitribai Phule Pune University • 2021 - 2025</p>
-                            <div class="inline-block bg-slate-800 text-blue-300 px-3 py-1 rounded-md text-sm font-semibold border border-slate-700">
-                                CGPA: 8.0
+    <!-- Education Timeline & Certifications Section -->
+    <section id="education" class="py-24 bg-brand-dark/40 border-y border-slate-800/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Education Box (7 Columns) -->
+                <div class="lg:col-span-7 space-y-8 reveal">
+                    <div>
+                        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; Education /&gt;</h2>
+                        <h3 class="text-3xl font-bold text-white">Academic Journey</h3>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Degree Item -->
+                        <div class="glass p-6 rounded-xl border border-slate-800 hover:border-brand-primary/30 transition-all flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                            <div>
+                                <span class="px-2.5 py-0.5 bg-brand-primary/10 border border-brand-primary/20 text-brand-primary rounded text-xs font-mono font-bold">Bachelor of Engineering</span>
+                                <h4 class="text-xl font-bold text-white mt-3">Artificial Intelligence &amp; Machine Learning</h4>
+                                <p class="text-slate-400 text-sm mt-1">Savitribai Phule Pune University, Pune</p>
+                                <p class="text-slate-500 text-xs font-mono mt-0.5">PES Modern College of Engineering, Pune</p>
+                            </div>
+                            <div class="text-left sm:text-right shrink-0">
+                                <span class="text-brand-accent font-bold font-mono text-lg block">CGPA 7.05</span>
+                                <span class="text-slate-500 font-mono text-xs"><i class="far fa-calendar-alt mr-1"></i> 2021 - 2025</span>
                             </div>
                         </div>
 
-                        <div class="relative pl-6 border-l border-slate-700">
-                            <div class="absolute w-3 h-3 bg-slate-500 rounded-full -left-[6.5px] top-2"></div>
-                            <h4 class="text-xl font-bold text-white">HSC - Maharashtra State Board</h4>
-                            <p class="text-slate-300 font-medium mb-1">Blue Bells Junior College, Nanded</p>
-                            <p class="text-slate-400 text-sm mb-2">2020 - 2021</p>
-                            <div class="inline-block bg-slate-800 text-slate-300 px-3 py-1 rounded-md text-sm font-semibold border border-slate-700">
-                                Percentage: 90%
+                        <!-- High School Item -->
+                        <div class="glass p-6 rounded-xl border border-slate-800 hover:border-brand-primary/30 transition-all flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                            <div>
+                                <span class="px-2.5 py-0.5 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo rounded text-xs font-mono font-bold">HSC - Maharashtra State Board</span>
+                                <h4 class="text-xl font-bold text-white mt-3">Science Studies</h4>
+                                <p class="text-slate-400 text-sm mt-1">Blue Bells Junior College of Arts, Commerce and Science</p>
+                                <p class="text-slate-500 text-xs font-mono mt-0.5">Nanded, Maharashtra</p>
+                            </div>
+                            <div class="text-left sm:text-right shrink-0">
+                                <span class="text-brand-accent font-bold font-mono text-lg block">Percentage: 90%</span>
+                                <span class="text-slate-500 font-mono text-xs"><i class="far fa-calendar-alt mr-1"></i> 2020 - 2021</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-3xl font-bold mb-10 flex items-center gap-2">
-                        <i data-lucide="line-chart" class="text-blue-400 w-8 h-8"></i> Certifications & Activities
-                    </h3>
-                    
-                    <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700 mb-6">
-                        <h4 class="text-lg font-bold text-white mb-4 border-b border-slate-700 pb-2">Certifications</h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-center gap-3 text-slate-300">
-                                <i data-lucide="award" class="text-blue-400 w-5 h-5"></i> Python For Data Science
-                            </li>
-                            <li class="flex items-center gap-3 text-slate-300">
-                                <i data-lucide="award" class="text-blue-400 w-5 h-5"></i> Fundamentals of Algorithms
-                            </li>
-                        </ul>
+                <!-- Right Credentials & Extracurricular Box (5 Columns) -->
+                <div class="lg:col-span-5 space-y-8 reveal" style="transition-delay: 150ms;">
+                    <div>
+                        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-accent uppercase mb-2">&lt; Certifications &amp; Accolades /&gt;</h2>
+                        <h3 class="text-3xl font-bold text-white">Qualifications</h3>
                     </div>
 
-                    <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-                        <h4 class="text-lg font-bold text-white mb-4 border-b border-slate-700 pb-2">Extracurricular Activities</h4>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm">Aspire 2025</span>
-                            <span class="bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm">Spandan 2024</span>
+                    <div class="space-y-4">
+                        <!-- Cert 1 -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80">
+                            <div class="w-10 h-10 bg-brand-accent/10 text-brand-accent rounded-lg flex items-center justify-center text-lg shrink-0">
+                                <i class="fas fa-certificate animate-spin" style="animation-duration: 20s;"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-white">Python For Data Science</h4>
+                                <p class="text-slate-400 text-xs font-mono mt-0.5">Fundamentals of data transformation, data analytics & statistical validations</p>
+                            </div>
+                        </div>
+
+                        <!-- Cert 2 -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80">
+                            <div class="w-10 h-10 bg-brand-indigo/10 text-brand-indigo rounded-lg flex items-center justify-center text-lg shrink-0">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-white">Fundamentals of Algorithms</h4>
+                                <p class="text-slate-400 text-xs font-mono mt-0.5">Core structuring patterns, algorithmic speed factors, sorting & parsing</p>
+                            </div>
+                        </div>
+
+                        <!-- Extra Activities Box -->
+                        <div class="p-6 rounded-xl bg-slate-900/30 border border-slate-850 space-y-3">
+                            <span class="text-slate-300 font-mono text-xs font-semibold block uppercase tracking-wider mb-2"><i class="fas fa-ranking-star mr-1.5 text-brand-primary"></i> Activites &amp; Extracurriculars</span>
+                            <div class="space-y-2 text-slate-400 text-xs sm:text-sm">
+                                <p class="flex items-center"><i class="fas fa-angles-right text-brand-primary/60 mr-2"></i> Aspire 2025 Technical Delegate</p>
+                                <p class="flex items-center"><i class="fas fa-angles-right text-brand-primary/60 mr-2"></i> Spandan 2024 Event Core Coordinator</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950 py-8 text-center border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-slate-500 text-sm mb-4 md:mb-0">
-                © <span id="year"></span> Sanket Suryawanshi. All rights reserved.
-            </p>
-            <div class="flex items-center space-x-6">
-                <a href="https://github.com/Sanket2358" class="text-slate-500 hover:text-white transition-colors">
-                    <i data-lucide="github" class="w-5 h-5"></i>
-                </a>
-                <a href="https://linkedin.com/in/Sanket Suryawanshi" class="text-slate-500 hover:text-white transition-colors">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-                <a href="mailto:suryawanshisanket769@gmail.com" class="text-slate-500 hover:text-white transition-colors">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
-                </a>
+    <!-- Call To Action & Contact Forms -->
+    <footer id="contact" class="pt-24 pb-12 bg-slate-950/80 border-t border-slate-900 relative overflow-hidden">
+        <!-- Abstract gradient background orb -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-brand-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-brand-primary uppercase mb-2">&lt; Network Connect /&gt;</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Let's Build Something Together</h3>
+                <p class="text-slate-400 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
+                    I am actively seeking professional opportunities in Data Analytics, Engineering, and Business Analytics where I can utilize my dataset designs, Python backend skills, and reporting dashboards.
+                </p>
+            </div>
+
+            <!-- Custom Message Card -->
+            <div class="grid md:grid-cols-12 gap-8 items-start mb-16 reveal" style="transition-delay: 150ms;">
+                <!-- Contact Direct Card Info (5 Cols) -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="glass p-5 rounded-xl border border-slate-800 space-y-4 font-mono text-xs sm:text-sm">
+                        <span class="text-xs text-slate-400 uppercase tracking-widest block font-bold mb-2">Direct Contact Facts</span>
+                        
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-primary text-base"></i>
+                            <a href="mailto:suryawanshisanket769@gmail.com" class="text-slate-300 hover:text-white transition-colors break-all">suryawanshisanket769@gmail.com</a>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-brand-accent text-base"></i>
+                            <a href="tel:+917498923254" class="text-slate-300 hover:text-white transition-colors">+91 7498923254</a>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-location-dot text-brand-indigo text-base"></i>
+                            <span class="text-slate-300">Pune, Maharashtra, India</span>
+                        </div>
+                    </div>
+
+                    <!-- Direct Quick Actions -->
+                    <div class="flex gap-3">
+                        <a href="https://github.com/Sanket2358" target="_blank" class="flex-1 py-3 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-semibold rounded-lg text-center text-xs transition-all flex items-center justify-center gap-2">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://linkedin.com/in/sanketsuryawanshi7" target="_blank" class="flex-1 py-3 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-semibold rounded-lg text-center text-xs transition-all flex items-center justify-center gap-2">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Custom Inline Contact Form (7 Cols) -->
+                <div class="md:col-span-7">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="glass p-6 rounded-xl border border-slate-800 space-y-4 text-left">
+                        <div>
+                            <label for="form-name" class="block font-mono text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Your Name</label>
+                            <input id="form-name" type="text" required placeholder="John Doe" class="w-full bg-slate-900/60 border border-slate-800 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-brand-primary text-sm transition-all">
+                        </div>
+                        
+                        <div>
+                            <label for="form-email" class="block font-mono text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Email Address</label>
+                            <input id="form-email" type="email" required placeholder="john@example.com" class="w-full bg-slate-900/60 border border-slate-800 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-brand-primary text-sm transition-all">
+                        </div>
+
+                        <div>
+                            <label for="form-message" class="block font-mono text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Inquiry Description</label>
+                            <textarea id="form-message" rows="3" required placeholder="Hey Sanket! We would love to discuss a Data Analyst opportunity with you..." class="w-full bg-slate-900/60 border border-slate-800 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-brand-primary text-sm transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-brand-primary text-slate-950 hover:bg-sky-300 font-bold font-mono text-xs uppercase tracking-wider rounded-lg transition-all shadow-neon-sky flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Send Structured Query
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Meta & Base Grid -->
+            <div class="pt-8 border-t border-slate-900 text-center flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 font-mono text-xs">
+                <p>&copy; <span id="year"></span> Sanket Suryawanshi. Crafted with precision analysis.</p>
+                <div class="flex space-x-4">
+                    <a href="mailto:suryawanshisanket769@gmail.com" class="hover:text-brand-primary transition-colors" aria-label="Mail Direct"><i class="fas fa-envelope text-lg"></i></a>
+                    <a href="https://github.com/Sanket2358" target="_blank" class="hover:text-brand-primary transition-colors" aria-label="Github Profile"><i class="fab fa-github text-lg"></i></a>
+                    <a href="https://linkedin.com/in/sanketsuryawanshi7" target="_blank" class="hover:text-brand-primary transition-colors" aria-label="Linkedin Profile"><i class="fab fa-linkedin text-lg"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Initialization Scripts -->
+    <!-- Comprehensive JavaScript Configurations -->
     <script>
-        // Initialize Icons
-        lucide.createIcons();
-        
-        // Set current year
+        // Database dataset mock for SQL Terminal simulation
+        const mockDatabase = {
+            tech_stack: [
+                { category: 'Data Analysis', items: 'SQL, Advanced Excel, Power BI' },
+                { category: 'AI & Machine Learning', items: 'Python Core, Scikit-Learn, Telemetry' },
+                { category: 'Computer Science', items: 'Data Structures & Algorithms, OOPs Concepts' },
+                { category: 'Soft Skills', items: 'Project Management, Team Work, Time Management' }
+            ],
+            certs: [
+                { credential: 'Python For Data Science', scope: 'Numpy, Pandas, Statistical modeling' },
+                { credential: 'Fundamentals of Algorithms', scope: 'Data sorting models, big-O optimizations' }
+            ],
+            academia: [
+                { class: 'Bachelor of Engineering', institution: 'SPPU (PES Modern College of Engineering)', score: 'CGPA: 7.05', span: '2021 - 2025' },
+                { class: 'HSC Science', institution: 'Blue Bells Junior College', score: 'Percentage: 90%', span: '2020 - 2021' }
+            ],
+            contact: [
+                { channel: 'Primary Email', link: 'suryawanshisanket769@gmail.com' },
+                { channel: 'Phone Number', link: '+91 7498923254' },
+                { channel: 'Global GitHub', link: 'https://github.com/Sanket2358' },
+                { channel: 'LinkedIn Reach', link: 'https://linkedin.com/in/sanketsuryawanshi7' }
+            ]
+        };
+
+        // Initialize elements
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Scroll spy for navigation links
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+        // Responsive Mobile Menu Dynamics
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
 
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            if (isHidden) {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            } else {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            }
+        });
+
+        // Close mobile overlay on deep link triggers
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            });
+        });
+
+        // Navbar blur transitions on page scroll thresholds
         window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 40) {
+                navbar.classList.add('shadow-xl', 'bg-brand-dark/90', 'border-slate-800');
+            } else {
+                navbar.classList.remove('shadow-xl', 'bg-brand-dark/90', 'border-slate-800');
+            }
+        });
+
+        // Interactive SQL terminal execution logic
+        function runSampleQuery(tableKey) {
+            const terminalScreen = document.getElementById('terminal-screen');
+            const targetTable = mockDatabase[tableKey];
+
+            let displayHTML = `<p class="text-slate-400">&gt; SELECT * FROM ${tableKey === 'certs' ? 'certs' : tableKey === 'academia' ? 'academia' : tableKey === 'contact' ? 'contact' : tableKey};</p>`;
+            displayHTML += `<p class="text-slate-500">// Execution complete. displaying dynamic fields:</p><br>`;
+
+            if (tableKey === 'tech_stack') {
+                displayHTML += `<table class="w-full text-left text-slate-300">
+                    <tr class="border-b border-slate-800 text-brand-primary text-xs uppercase"><th class="pb-1.5">Category</th><th class="pb-1.5">Skills Set</th></tr>`;
+                targetTable.forEach(row => {
+                    displayHTML += `<tr class="border-b border-slate-900 hover:bg-slate-900/50"><td class="py-1.5 text-brand-accent pr-4">${row.category}</td><td class="py-1.5 text-slate-300">${row.items}</td></tr>`;
+                });
+                displayHTML += `</table>`;
+            } else if (tableKey === 'certifications') {
+                displayHTML += `<table class="w-full text-left text-slate-300">
+                    <tr class="border-b border-slate-800 text-brand-primary text-xs uppercase"><th class="pb-1.5">Credential</th><th class="pb-1.5">Scope / Focus</th></tr>`;
+                mockDatabase.certs.forEach(row => {
+                    displayHTML += `<tr class="border-b border-slate-900 hover:bg-slate-900/50"><td class="py-1.5 text-brand-accent pr-4">${row.credential}</td><td class="py-1.5 text-slate-300">${row.scope}</td></tr>`;
+                });
+                displayHTML += `</table>`;
+            } else if (tableKey === 'education') {
+                displayHTML += `<table class="w-full text-left text-slate-300">
+                    <tr class="border-b border-slate-800 text-brand-primary text-xs uppercase"><th class="pb-1.5">Degree / HSC</th><th class="pb-1.5">Institution</th><th class="pb-1.5">Grade</th><th class="pb-1.5">Timeline</th></tr>`;
+                mockDatabase.academia.forEach(row => {
+                    displayHTML += `<tr class="border-b border-slate-900 hover:bg-slate-900/50"><td class="py-1.5 text-brand-accent pr-4">${row.class}</td><td class="py-1.5 text-slate-300">${row.institution}</td><td class="py-1.5 text-brand-indigo">${row.score}</td><td class="py-1.5 text-slate-400 font-mono">${row.span}</td></tr>`;
+                });
+                displayHTML += `</table>`;
+            } else if (tableKey === 'contact_info') {
+                displayHTML += `<table class="w-full text-left text-slate-300">
+                    <tr class="border-b border-slate-800 text-brand-primary text-xs uppercase"><th class="pb-1.5">Channel</th><th class="pb-1.5">Coordinate Fact</th></tr>`;
+                mockDatabase.contact.forEach(row => {
+                    displayHTML += `<tr class="border-b border-slate-900 hover:bg-slate-900/50"><td class="py-1.5 text-brand-accent pr-4">${row.channel}</td><td class="py-1.5 text-slate-300 font-mono break-all">${row.link}</td></tr>`;
+                });
+                displayHTML += `</table>`;
+            }
+
+            document.getElementById('terminal-content').innerHTML = displayHTML;
+            terminalScreen.scrollTop = terminalScreen.scrollHeight;
+        }
+
+        // Handle typing queries in custom manual console field
+        function executeManualQuery() {
+            const rawInput = document.getElementById('query-input').value.trim().toLowerCase();
+            const terminalScreen = document.getElementById('terminal-screen');
+            
+            if (rawInput === '') return;
+
+            let resolvedKey = '';
+            if (rawInput.includes('tech_stack') || rawInput.includes('skills')) {
+                resolvedKey = 'tech_stack';
+            } else if (rawInput.includes('certs') || rawInput.includes('certifications')) {
+                resolvedKey = 'certifications';
+            } else if (rawInput.includes('academia') || rawInput.includes('education') || rawInput.includes('school')) {
+                resolvedKey = 'education';
+            } else if (rawInput.includes('contact')) {
+                resolvedKey = 'contact_info';
+            }
+
+            if (resolvedKey !== '') {
+                runSampleQuery(resolvedKey);
+            } else {
+                let errorHTML = `<p class="text-slate-400">&gt; ${document.getElementById('query-input').value}</p>`;
+                errorHTML += `<p class="text-red-400 mt-1 font-mono"><i class="fas fa-triangle-exclamation mr-1.5"></i> SQL Parse Error: Table or query parameters not found. Try running SELECT * FROM tech_stack; certs; academia; or contact;</p>`;
+                document.getElementById('terminal-content').innerHTML = errorHTML;
+            }
+
+            document.getElementById('query-input').value = '';
+            terminalScreen.scrollTop = terminalScreen.scrollHeight;
+        }
+
+        // Trigger console input action if enter is clicked inside console input
+        document.getElementById('query-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                executeManualQuery();
+            }
+        });
+
+        // Toast alert builder
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-xl shadow-lg border text-sm font-mono flex items-center gap-3 transition-all transform translate-y-5 opacity-0 ${
+                type === 'success' 
+                    ? 'bg-slate-900 border-brand-accent text-brand-accent shadow-neon-emerald' 
+                    : 'bg-slate-900 border-brand-primary text-brand-primary shadow-neon-sky'
+            }`;
+            toast.innerHTML = `<i class="${type === 'success' ? 'fas fa-circle-check' : 'fas fa-info-circle'} text-lg"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation frame sequence
+            setTimeout(() => {
+                toast.classList.remove('translate-y-5', 'opacity-0');
+            }, 50);
+
+            // Automatic dismiss threshold triggers
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        // Contact Form action override logic (Prevents standard action / custom notifications)
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+            const msg = document.getElementById('form-message').value;
+
+            // Trigger notification
+            showToast(`Database transaction success! Thanks for connecting, ${name}. I will get back to you shortly!`, 'success');
+            
+            // Clean values
+            document.getElementById('contact-form').reset();
+        }
+
+        // Scroll reveal logic
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
                 }
             });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
 
-            navLinks.forEach(link => {
-                link.classList.remove('text-blue-600');
-                link.classList.add('text-slate-600');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.remove('text-slate-600');
-                    link.classList.add('text-blue-600');
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Initial trigger check for already-visible parameters
+        window.addEventListener('load', () => {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
                 }
             });
         });
